@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام - IdeaDiagram AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .register-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 400px;
+            max-width: 90%;
+        }
+        h1 { text-align: center; margin-bottom: 10px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743); background-clip: text;; -webkit-text-fill-color: transparent; }
+        p { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 14px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; font-size: 14px; }
+        input:focus { outline: none; border-color: #f09433; }
+        button { width: 100%; padding: 15px; background: linear-gradient(45deg, #f09433, #e6683c); border: none; border-radius: 10px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:hover { transform: translateY(-2px); }
+        button:disabled { opacity: 0.5; }
+        .link { text-align: center; margin-top: 20px; }
+        .link a { color: #f09433; text-decoration: none; }
+        .error { color: #ff4444; text-align: center; margin-top: 10px; display: none; }
+        .error.active { display: block; }
+        .success { color: #44ff44; text-align: center; margin-top: 10px; display: none; }
+        .success.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h1>🚀 IdeaDiagram AI</h1>
+        <p>حساب کاربری جدید بسازید</p>
+        
+        <input type="text" id="username" placeholder="نام کاربری">
+        <input type="email" id="email" placeholder="ایمیل">
+        <input type="password" id="password" placeholder="رمز عبور">
+        <button id="registerBtn" onclick="register()">✨ ثبت‌نام</button>
+        
+        <div class="error" id="error"></div>
+        <div class="success" id="success"></div>
+        
+        <div class="link">
+            حساب دارید؟ <a href="login.html">ورود کنید</a>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api/v1';
+
+        async function register() {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!username || !email || !password) {
+                showError('لطفاً همه فیلدها را پر کنید');
+                return;
+            }
+            
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            hideMessages();
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'خطا در ثبت‌نام');
+                }
+                
+                showSuccess('✅ ثبت‌نام موفق! در حال انتقال به صفحه ورود...');
+                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+        
+        function showError(msg) {
+            const error = document.getElementById('error');
+            error.textContent = '❌ ' + msg;
+            error.classList.add('active');
+        }
+        
+        function showSuccess(msg) {
+            const success = document.getElementById('success');
+            success.textContent = msg;
+            success.classList.add('active');
+        }
+        
+        function hideMessages() {
+            document.getElementById('error').classList.remove('active');
+            document.getElementById('success').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

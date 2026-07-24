@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdeaDiagram AI - تبدیل ایده به دیاگرام</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- هدر -->
+        <header class="header">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <p style="font-size: 25px;">🚀</p>
+                <h1> IdeaDiagram AI</h1>
+            </div>
+            
+            <p>ایده‌هات رو به دیاگرام تبدیل کن | فارسی </p>
+        </header>
+
+        <!-- گرید اصلی -->
+        <main class="main-grid">
+            <!-- پنل ورودی -->
+            <section class="card input-panel">
+                <h2>📝 ایده خود را وارد کنید</h2>
+                
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="online">☁️ آنلاین (AI)</button>
+                    <button class="mode-btn" data-mode="offline">💻 آفلاین (محلی)</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="textInput">متن ایده، پروژه یا فرآیند:</label>
+                    <textarea 
+                        id="textInput" 
+                        placeholder="مثال: می‌خواهم یک فروشگاه اینترنتی راه‌اندازی کنم. ابتدا تحقیق بازار، سپس طراحی سایت، بعد بازاریابی و فروش..."
+                        rows="4"
+                    ></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="diagramType">نوع دیاگرام:</label>
+                    <select id="diagramType">
+                        <option value="">خودکار</option>
+                        <option value="flowchart">📊 فلوچارت</option>
+                        <option value="roadmap">🗺️ نقشه راه</option>
+                        <option value="gantt_chart">📅 نمودار گانت</option>
+                    </select>
+                </div>
+
+                <button class="generate-btn" id="generateBtn">
+                    ✨ تولید دیاگرام
+                </button>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>در حال تحلیل و ساخت دیاگرام...</p>
+                </div>
+
+                <div class="error" id="error"></div>
+
+                <div class="info-row" id="infoRow" style="display: none;">
+                    <span class="badge" id="modeBadge"></span>
+                    <span class="badge remaining" id="remainingBadge"></span>
+                </div>
+            </section>
+
+            <!-- پنل خروجی -->
+            <section class="card output-panel">
+                <h2>🎨 دیاگرام خروجی</h2>
+                <div class="diagram-container" id="diagramContainer">
+                    <p class="placeholder-text">دیاگرام شما اینجا نمایش داده می‌شود...</p>
+                </div>
+                <div class="actions" id="actions" style="display: none;">
+                    <button class="action-btn" id="downloadSvgBtn">📥 دانلود SVG</button>
+                    <button class="action-btn" id="downloadPngBtn">🖼️ دانلود PNG</button>
+                    <button class="action-btn" id="fullscreenBtn">📺 تمام صفحه</button>
+                    <button class="action-btn" id="copyCodeBtn">📋 کپی کد</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- اسکریپت‌ها -->
+        <!-- اسکریپت‌ها -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvg@4.0.2/lib/umd.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/diagram.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+    <!-- Gantt -->
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
+    <!-- Roadmap -->
+    <script src="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.2/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/styles/vis-timeline.min.css">
+    <script>
+    // چک لاگین
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+    }
+    
+    // نمایش نام کاربری
+    const username = localStorage.getItem('username');
+    if (username) {
+        document.querySelector('.header p').textContent = `خوش آمدید ${username}! | ایده‌هات رو به دیاگرام تبدیل کن`;
+    }
+    
+    // دکمه خروج
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = '🚪 خروج';
+    logoutBtn.style.cssText = 'position:fixed;top:20px;left:20px;padding:10px 20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:white;cursor:pointer;z-index:1000;';
+    logoutBtn.onclick = function() {
+        localStorage.clear();
+        window.location.href = 'login.html';
+    };
+    document.body.appendChild(logoutBtn);
+</script>
+</body>
+</html>
