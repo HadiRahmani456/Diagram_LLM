@@ -22,4 +22,4 @@ def startup():
 
 @app.get("/")
 async def root():
-    return {"message": "IdeaDiagram AI API v2.0", "status": "online"}
+    return {"message": "IdeaDiagram AI API", "status": "online"}

@@ -58,7 +58,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:8000/api/v1';
+        const API_BASE_URL = 'http://localhost:54321/api/v1';
 
         async function register() {
             const username = document.getElementById('username').value.trim();
@@ -75,7 +75,7 @@
             hideMessages();
             
             try {
-                const response = await fetch(`${API_URL}/auth/register`, {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })

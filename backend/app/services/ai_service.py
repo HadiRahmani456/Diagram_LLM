@@ -26,17 +26,24 @@ class AIService:
         
     async def analyze_text(self, text, mode, diagram_type=None):
         dtype = diagram_type.value if diagram_type else "flowchart"
-    
+        
         if mode == AIMode.ONLINE:
             result = await self._try_groq(text, dtype)
-            if result: return result
-    
-        # Colab GPU (همیشه آنلاین)
-        result = await self._try_colab(text, dtype)
-        if result and len(result.get("nodes", [])) > 1:
-            return result
-    
-        return self._smart_parse(text, dtype)
+            if result and len(result.get("nodes", [])) > 1:
+                result["source"] = "groq"
+                print("✅ Groq")
+                return result
+            
+            result = await self._try_colab(text, dtype)
+            if result and len(result.get("nodes", [])) > 1:
+                result["source"] = "colab"
+                print("✅ Colab")
+                return result
+        
+        result = self._smart_parse(text, dtype)
+        result["source"] = "static"
+        print("⚠️ Static")
+        return result
     
     async def _try_groq(self, text: str, diagram_type: str) -> Optional[Dict]:
         is_fa = self._is_persian(text)

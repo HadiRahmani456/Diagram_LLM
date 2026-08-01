@@ -50,8 +50,10 @@ async def generate_diagram(
             diagram_type=request.diagram_type
         )
         
-        current_user.requests_today += 1
-        db.commit()
+            # فقط اگه از Groq استفاده بشه محدودیت کم بشه
+        if result.get("source") == "groq":
+            current_user.requests_today += 1
+            db.commit()
         
         remaining = None if current_user.is_admin else (current_user.daily_limit - current_user.requests_today)
         
