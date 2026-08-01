@@ -77,25 +77,3 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 @router.get("/me", response_model=UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):
     return current_user
-
-
-
-
-@router.get("/make-admin")
-def make_admin(db: Session = Depends(get_db)):
-    from app.core.security import get_password_hash
-    admin = db.query(User).filter(User.username == "admin").first()
-    if admin:
-        admin.is_admin = True
-        admin.daily_limit = 999999
-    else:
-        admin = User(
-            username="admin",
-            email="admin@diagram.com",
-            hashed_password=get_password_hash("admin123"),
-            is_admin=True,
-            daily_limit=999999
-        )
-        db.add(admin)
-    db.commit()
-    return {"message": "Admin ready!"}
