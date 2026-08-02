@@ -107,43 +107,7 @@ class AIService:
     def _is_persian(self, text: str) -> bool:
         persian = set('ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی')
         return bool(persian & set(text))
-    
-    # def _parse_json(self, content: str) -> Optional[Dict]:
-    #     content = content.strip()
-    #     if "```" in content:
-    #         content = content.split("```")[1]
-    #         if content.startswith("json"): content = content[4:]
-        
-    #     # اول سعی کن JSON پارس کنه
-    #     start = content.find('{')
-    #     end = content.rfind('}') + 1
-    #     if start >= 0 and end > start:
-    #         try:
-    #             data = json.loads(content[start:end])
-    #             if "nodes" in data:
-    #                 nodes = [n for n in data["nodes"] if n.get("label", "").strip() and len(n.get("label", "").strip()) > 2]
-    #                 for i, node in enumerate(nodes, 1): node["id"] = str(i)
-    #                 edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
-    #                 return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
-    #         except:
-    #             pass
-        
-    #     # اگه JSON نبود، خط‌ها رو پارس کن
-    #     lines = content.split('\n')
-    #     nodes = []
-    #     for line in lines:
-    #         line = line.strip()
-    #         # حذف ** و - و شماره‌ها
-    #         line = re.sub(r'\*\*|-#|\*|^\d+\.\s*|^\-\s*', '', line).strip()
-    #         if line and len(line) > 3 and '`' not in line:
-    #             nodes.append(line)
-        
-    #     if len(nodes) > 1:
-    #         nodes = [{"id": str(i+1), "label": n[:80], "type": "process"} for i, n in enumerate(nodes)]
-    #         edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
-    #         return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
-        
-    #     return None
+
 
     def _parse_json(self, content: str) -> Optional[Dict]:
         content = content.strip()
@@ -195,6 +159,7 @@ class AIService:
             return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
         
         return None
+    
     def _get_prompt(self, text: str, diagram_type: str, is_fa: bool) -> str:
         
         prompts = {
