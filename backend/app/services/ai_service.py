@@ -33,12 +33,13 @@ class AIService:
                 result["source"] = "groq"
                 print("✅ Groq")
                 return result
-            
-            result = await self._try_colab(text, dtype)
-            if result and len(result.get("nodes", [])) > 1:
-                result["source"] = "colab"
-                print("✅ Colab")
-                return result
+        
+        # Colab - چه آنلاین چه آفلاین
+        result = await self._try_colab(text, dtype)
+        if result and len(result.get("nodes", [])) > 1:
+            result["source"] = "colab"
+            print("✅ Colab")
+            return result
         
         result = self._smart_parse(text, dtype)
         result["source"] = "static"
