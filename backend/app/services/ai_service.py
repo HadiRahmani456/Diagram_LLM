@@ -108,32 +108,83 @@ class AIService:
         persian = set('ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی')
         return bool(persian & set(text))
     
+    # def _parse_json(self, content: str) -> Optional[Dict]:
+    #     content = content.strip()
+    #     if "```" in content:
+    #         content = content.split("```")[1]
+    #         if content.startswith("json"): content = content[4:]
+        
+    #     # اول سعی کن JSON پارس کنه
+    #     start = content.find('{')
+    #     end = content.rfind('}') + 1
+    #     if start >= 0 and end > start:
+    #         try:
+    #             data = json.loads(content[start:end])
+    #             if "nodes" in data:
+    #                 nodes = [n for n in data["nodes"] if n.get("label", "").strip() and len(n.get("label", "").strip()) > 2]
+    #                 for i, node in enumerate(nodes, 1): node["id"] = str(i)
+    #                 edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
+    #                 return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
+    #         except:
+    #             pass
+        
+    #     # اگه JSON نبود، خط‌ها رو پارس کن
+    #     lines = content.split('\n')
+    #     nodes = []
+    #     for line in lines:
+    #         line = line.strip()
+    #         # حذف ** و - و شماره‌ها
+    #         line = re.sub(r'\*\*|-#|\*|^\d+\.\s*|^\-\s*', '', line).strip()
+    #         if line and len(line) > 3 and '`' not in line:
+    #             nodes.append(line)
+        
+    #     if len(nodes) > 1:
+    #         nodes = [{"id": str(i+1), "label": n[:80], "type": "process"} for i, n in enumerate(nodes)]
+    #         edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
+    #         return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
+        
+    #     return None
+
     def _parse_json(self, content: str) -> Optional[Dict]:
         content = content.strip()
         if "```" in content:
             content = content.split("```")[1]
             if content.startswith("json"): content = content[4:]
         
-        # اول سعی کن JSON پارس کنه
         start = content.find('{')
         end = content.rfind('}') + 1
         if start >= 0 and end > start:
             try:
                 data = json.loads(content[start:end])
+                
+                # حالت ۱: فرمت استاندارد {"nodes": [...], "edges": [...]}
                 if "nodes" in data:
                     nodes = [n for n in data["nodes"] if n.get("label", "").strip() and len(n.get("label", "").strip()) > 2]
                     for i, node in enumerate(nodes, 1): node["id"] = str(i)
                     edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
                     return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
+                
+                # حالت ۲: کلیدها مرحله هستن {"مرحله اول": {...}, "مرحله دوم": {...}}
+                nodes = []
+                for key, value in data.items():
+                    if isinstance(value, dict):
+                        label = value.get("توضیحات", value.get("description", key))
+                    else:
+                        label = str(value)
+                    if label and len(label.strip()) > 2:
+                        nodes.append({"id": str(len(nodes)+1), "label": label[:80], "type": "process"})
+                
+                if len(nodes) > 1:
+                    edges = [{"from": str(i), "to": str(i+1), "label": "←"} for i in range(1, len(nodes))]
+                    return {"nodes": nodes, "edges": edges, "suggested_type": "flowchart"}
             except:
                 pass
         
-        # اگه JSON نبود، خط‌ها رو پارس کن
+        # حالت ۳: خط‌های متنی
         lines = content.split('\n')
         nodes = []
         for line in lines:
             line = line.strip()
-            # حذف ** و - و شماره‌ها
             line = re.sub(r'\*\*|-#|\*|^\d+\.\s*|^\-\s*', '', line).strip()
             if line and len(line) > 3 and '`' not in line:
                 nodes.append(line)
