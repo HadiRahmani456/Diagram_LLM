@@ -1,118 +1,1673 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثبت‌نام - IdeaDiagram AI</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ثبت‌نام | IdeaDiagram AI</title>
+
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
         body {
-            font-family: 'Segoe UI', Tahoma;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Arial,
+                sans-serif;
+
             color: white;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(124, 58, 237, 0.22),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(6, 182, 212, 0.18),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #080b18 0%,
+                    #11152b 45%,
+                    #0a1020 100%
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 24px;
+
+            overflow: hidden;
+
+            position: relative;
         }
+
+
+        /* =====================================================
+           BACKGROUND GRID
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    rgba(0,0,0,0.8),
+                    transparent
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           GLOW
+        ===================================================== */
+
+        .glow {
+
+            position: fixed;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            pointer-events: none;
+
+            opacity: 0.35;
+        }
+
+
+        .glow-one {
+
+            background: #7c3aed;
+
+            top: -100px;
+            right: -80px;
+        }
+
+
+        .glow-two {
+
+            background: #06b6d4;
+
+            bottom: -120px;
+            left: -100px;
+        }
+
+
+        /* =====================================================
+           REGISTER CARD
+        ===================================================== */
+
         .register-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 400px;
-            max-width: 90%;
+
+            width: 430px;
+
+            max-width: 100%;
+
+            padding: 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.085),
+                    rgba(255,255,255,0.035)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            border-radius: 26px;
+
+            backdrop-filter: blur(22px);
+
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+
+            position: relative;
+
+            z-index: 2;
+
+            animation:
+                cardAppear 0.6s ease;
         }
-        h1 { text-align: center; margin-bottom: 10px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743); background-clip: text;; -webkit-text-fill-color: transparent; }
-        p { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 14px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; font-size: 14px; }
-        input:focus { outline: none; border-color: #f09433; }
-        button { width: 100%; padding: 15px; background: linear-gradient(45deg, #f09433, #e6683c); border: none; border-radius: 10px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; }
-        button:hover { transform: translateY(-2px); }
-        button:disabled { opacity: 0.5; }
-        .link { text-align: center; margin-top: 20px; }
-        .link a { color: #f09433; text-decoration: none; }
-        .error { color: #ff4444; text-align: center; margin-top: 10px; display: none; }
-        .error.active { display: block; }
-        .success { color: #44ff44; text-align: center; margin-top: 10px; display: none; }
-        .success.active { display: block; }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(20px)
+                    scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+
+            width: 64px;
+
+            height: 64px;
+
+            margin:
+                0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 12px 35px
+                rgba(124,58,237,0.28);
+
+            position: relative;
+        }
+
+
+        .logo::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -5px;
+
+            border-radius: 22px;
+
+            border:
+                1px solid
+                rgba(124,58,237,0.25);
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .brand-title {
+
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #c4b5fd,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 14px;
+
+            margin-top: 8px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           INPUT GROUP
+        ===================================================== */
+
+        .input-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #d1d5db;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #7c8497;
+
+            font-size: 17px;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 52px;
+
+            padding:
+                0 45px
+                0 45px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.11);
+
+            background:
+                rgba(0,0,0,0.22);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.25s,
+                box-shadow 0.25s,
+                background 0.25s;
+        }
+
+
+        input::placeholder {
+
+            color: #6b7280;
+        }
+
+
+        input:focus {
+
+            border-color:
+                rgba(124,58,237,0.75);
+
+            background:
+                rgba(0,0,0,0.30);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(124,58,237,0.12),
+                0 8px 25px
+                rgba(0,0,0,0.15);
+        }
+
+
+        /* =====================================================
+           VALID / INVALID INPUT
+        ===================================================== */
+
+        input.valid {
+
+            border-color:
+                rgba(34,197,94,0.55);
+        }
+
+
+        input.invalid {
+
+            border-color:
+                rgba(239,68,68,0.65);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(239,68,68,0.07);
+        }
+
+
+        /* =====================================================
+           FIELD ERROR
+        ===================================================== */
+
+        .field-error {
+
+            min-height: 0;
+
+            margin-top: 5px;
+
+            color: #fca5a5;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            opacity: 0;
+
+            transform: translateY(-3px);
+
+            transition:
+                opacity 0.2s,
+                transform 0.2s;
+        }
+
+
+        .field-error.active {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =====================================================
+           PASSWORD TOGGLE
+        ===================================================== */
+
+        .password-toggle {
+
+            position: absolute;
+
+            left: 13px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 30px;
+
+            height: 30px;
+
+            padding: 0;
+
+            margin: 0;
+
+            border: none;
+
+            background: transparent;
+
+            color: #7c8497;
+
+            box-shadow: none;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            z-index: 3;
+        }
+
+
+        .password-toggle:hover {
+
+            transform:
+                translateY(-50%);
+
+            box-shadow: none;
+
+            color: #c4b5fd;
+        }
+
+
+        /* =====================================================
+           PASSWORD HINT
+        ===================================================== */
+
+        .password-hint {
+
+            color: #687083;
+
+            font-size: 10px;
+
+            line-height: 1.7;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           REGISTER BUTTON
+        ===================================================== */
+
+        #registerBtn {
+
+            width: 100%;
+
+            height: 52px;
+
+            margin-top: 4px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #6366f1 55%,
+                    #06b6d4
+                );
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 30px
+                rgba(99,102,241,0.22);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                opacity 0.2s;
+        }
+
+
+        #registerBtn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 16px 38px
+                rgba(99,102,241,0.32);
+        }
+
+
+        #registerBtn:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        #registerBtn:disabled {
+
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =====================================================
+           ERROR MESSAGE
+        ===================================================== */
+
+        .error {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px 14px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(239,68,68,0.08);
+
+            border:
+                1px solid
+                rgba(239,68,68,0.22);
+
+            color: #fca5a5;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .error.active {
+
+            display: block;
+
+            animation:
+                messageAppear 0.25s ease;
+        }
+
+
+        /* =====================================================
+           SUCCESS MESSAGE
+        ===================================================== */
+
+        .success {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px 14px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(34,197,94,0.08);
+
+            border:
+                1px solid
+                rgba(34,197,94,0.22);
+
+            color: #86efac;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .success.active {
+
+            display: block;
+
+            animation:
+                messageAppear 0.25s ease;
+        }
+
+
+        @keyframes messageAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-4px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           LOGIN LINK
+        ===================================================== */
+
+        .link {
+
+            text-align: center;
+
+            margin-top: 24px;
+
+            padding-top: 21px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            color: #8b93a5;
+
+            font-size: 13px;
+        }
+
+
+        .link a {
+
+            color: #a78bfa;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition:
+                color 0.2s;
+        }
+
+
+        .link a:hover {
+
+            color: #67e8f9;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer-text {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #555d70;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .register-box {
+
+                padding:
+                    30px 22px;
+
+                border-radius: 22px;
+            }
+
+            .brand-title {
+                font-size: 24px;
+            }
+
+            .logo {
+
+                width: 58px;
+                height: 58px;
+
+                font-size: 24px;
+            }
+        }
+
     </style>
+
 </head>
+
+
 <body>
+
+    <div class="glow glow-one"></div>
+
+    <div class="glow glow-two"></div>
+
+
     <div class="register-box">
-        <h1>🚀 IdeaDiagram AI</h1>
-        <p>حساب کاربری جدید بسازید</p>
-        
-        <input type="text" id="username" placeholder="نام کاربری">
-        <input type="email" id="email" placeholder="ایمیل">
-        <input type="password" id="password" placeholder="رمز عبور">
-        <button id="registerBtn" onclick="register()">✨ ثبت‌نام</button>
-        
-        <div class="error" id="error"></div>
-        <div class="success" id="success"></div>
-        
-        <div class="link">
-            حساب دارید؟ <a href="login.html">ورود کنید</a>
+
+        <div class="logo">
+            ✦
         </div>
+
+
+        <h1 class="brand-title">
+            IdeaDiagram AI
+        </h1>
+
+
+        <p class="subtitle">
+            حساب کاربری خود را ایجاد کنید
+        </p>
+
+
+        <!-- =================================================
+             USERNAME
+        ================================================== -->
+
+        <div class="input-group">
+
+            <label for="username">
+                نام کاربری
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    ◉
+                </span>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="یک نام کاربری انتخاب کنید"
+                    autocomplete="username"
+                    maxlength="30"
+                >
+
+            </div>
+
+            <div
+                class="field-error"
+                id="usernameError"
+            ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             EMAIL
+        ================================================== -->
+
+        <div class="input-group">
+
+            <label for="email">
+                ایمیل
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    @
+                </span>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="example@email.com"
+                    autocomplete="email"
+                    maxlength="100"
+                >
+
+            </div>
+
+            <div
+                class="field-error"
+                id="emailError"
+            ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             PASSWORD
+        ================================================== -->
+
+        <div class="input-group">
+
+            <label for="password">
+                رمز عبور
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    ◈
+                </span>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="یک رمز عبور انتخاب کنید"
+                    autocomplete="new-password"
+                    maxlength="128"
+                >
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    id="passwordToggle"
+                    onclick="togglePassword()"
+                    aria-label="نمایش رمز عبور"
+                >
+                    👁
+                </button>
+
+            </div>
+
+            <div
+                class="password-hint"
+            >
+                حداقل ۸ کاراکتر شامل حداقل یک حرف و یک عدد
+            </div>
+
+            <div
+                class="field-error"
+                id="passwordError"
+            ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             REGISTER BUTTON
+        ================================================== -->
+
+        <button
+            id="registerBtn"
+            onclick="register()"
+        >
+            ایجاد حساب کاربری
+        </button>
+
+
+        <!-- =================================================
+             GLOBAL ERROR
+        ================================================== -->
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+
+        <!-- =================================================
+             SUCCESS
+        ================================================== -->
+
+        <div
+            class="success"
+            id="success"
+        ></div>
+
+
+        <!-- =================================================
+             LOGIN LINK
+        ================================================== -->
+
+        <div class="link">
+
+            قبلاً حساب ساخته‌اید؟
+
+            <a href="login.html">
+                وارد شوید
+            </a>
+
+        </div>
+
+
+        <div class="footer-text">
+            IdeaDiagram AI · ساخت دیاگرام با هوش مصنوعی
+        </div>
+
     </div>
 
-    <script>
-        const API_URL = 'https://diagram-api-nrt3.onrender.com/api/v1';
-        const API_BASE_URL = 'https://diagram-api-nrt3.onrender.com/api/v1';
 
-        async function register() {
-            const username = document.getElementById('username').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            
-            if (!username || !email || !password) {
-                showError('لطفاً همه فیلدها را پر کنید');
-                return;
+    <script>
+
+        /* =====================================================
+           API
+        ===================================================== */
+
+        const API_URL =
+            window.location.hostname === 'localhost'
+                ? 'http://localhost:54321/api/v1'
+                : 'https://diagram-api-nrt3.onrender.com/api/v1';
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const usernameInput =
+            document.getElementById('username');
+
+        const emailInput =
+            document.getElementById('email');
+
+        const passwordInput =
+            document.getElementById('password');
+
+        const registerBtn =
+            document.getElementById('registerBtn');
+
+
+        /* =====================================================
+           VALIDATION RULES
+        ===================================================== */
+
+        const usernameRegex =
+            /^[a-zA-Z0-9_-]+$/;
+
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+
+        const passwordLetterRegex =
+            /[A-Za-z]/;
+
+
+        const passwordNumberRegex =
+            /[0-9]/;
+
+
+        /* =====================================================
+           USERNAME VALIDATION
+        ===================================================== */
+
+        function validateUsername() {
+
+            const username =
+                usernameInput.value.trim();
+
+
+            if (!username) {
+
+                setFieldError(
+                    usernameInput,
+                    'usernameError',
+                    'نام کاربری را وارد کنید'
+                );
+
+                return false;
             }
-            
-            const btn = document.getElementById('registerBtn');
-            btn.disabled = true;
-            hideMessages();
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
-                });
-                
-                if (!response.ok) {
-                    const err = await response.json();
-                    throw new Error(err.detail || 'خطا در ثبت‌نام');
-                }
-                
-                showSuccess('✅ ثبت‌نام موفق! در حال انتقال به صفحه ورود...');
-                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
-                
-            } catch (err) {
-                showError(err.message);
-            } finally {
-                btn.disabled = false;
+
+
+            if (username.length < 3) {
+
+                setFieldError(
+                    usernameInput,
+                    'usernameError',
+                    'نام کاربری باید حداقل ۳ کاراکتر باشد'
+                );
+
+                return false;
             }
+
+
+            if (!usernameRegex.test(username)) {
+
+                setFieldError(
+                    usernameInput,
+                    'usernameError',
+                    'نام کاربری فقط می‌تواند شامل حروف انگلیسی، عدد، _ و - باشد'
+                );
+
+                return false;
+            }
+
+
+            setFieldValid(
+                usernameInput,
+                'usernameError'
+            );
+
+            return true;
         }
-        
-        function showError(msg) {
-            const error = document.getElementById('error');
-            error.textContent = '❌ ' + msg;
+
+
+        /* =====================================================
+           EMAIL VALIDATION
+        ===================================================== */
+
+        function validateEmail() {
+
+            const email =
+                emailInput.value.trim();
+
+
+            if (!email) {
+
+                setFieldError(
+                    emailInput,
+                    'emailError',
+                    'ایمیل را وارد کنید'
+                );
+
+                return false;
+            }
+
+
+            if (!emailRegex.test(email)) {
+
+                setFieldError(
+                    emailInput,
+                    'emailError',
+                    'لطفاً یک ایمیل معتبر وارد کنید'
+                );
+
+                return false;
+            }
+
+
+            setFieldValid(
+                emailInput,
+                'emailError'
+            );
+
+            return true;
+        }
+
+
+        /* =====================================================
+           PASSWORD VALIDATION
+        ===================================================== */
+
+        function validatePassword() {
+
+            const password =
+                passwordInput.value;
+
+
+            if (!password) {
+
+                setFieldError(
+                    passwordInput,
+                    'passwordError',
+                    'رمز عبور را وارد کنید'
+                );
+
+                return false;
+            }
+
+
+            if (password.length < 8) {
+
+                setFieldError(
+                    passwordInput,
+                    'passwordError',
+                    'رمز عبور باید حداقل ۸ کاراکتر باشد'
+                );
+
+                return false;
+            }
+
+
+            if (/\s/.test(password)) {
+
+                setFieldError(
+                    passwordInput,
+                    'passwordError',
+                    'رمز عبور نباید شامل فاصله باشد'
+                );
+
+                return false;
+            }
+
+
+            if (!passwordLetterRegex.test(password)) {
+
+                setFieldError(
+                    passwordInput,
+                    'passwordError',
+                    'رمز عبور باید حداقل یک حرف انگلیسی داشته باشد'
+                );
+
+                return false;
+            }
+
+
+            if (!passwordNumberRegex.test(password)) {
+
+                setFieldError(
+                    passwordInput,
+                    'passwordError',
+                    'رمز عبور باید حداقل یک عدد داشته باشد'
+                );
+
+                return false;
+            }
+
+
+            setFieldValid(
+                passwordInput,
+                'passwordError'
+            );
+
+            return true;
+        }
+
+
+        /* =====================================================
+           FIELD ERROR
+        ===================================================== */
+
+        function setFieldError(
+            input,
+            errorId,
+            message
+        ) {
+
+            input.classList.remove('valid');
+
+            input.classList.add('invalid');
+
+
+            const error =
+                document.getElementById(errorId);
+
+
+            error.textContent =
+                message;
+
             error.classList.add('active');
         }
-        
+
+
+        /* =====================================================
+           FIELD VALID
+        ===================================================== */
+
+        function setFieldValid(
+            input,
+            errorId
+        ) {
+
+            input.classList.remove('invalid');
+
+            input.classList.add('valid');
+
+
+            const error =
+                document.getElementById(errorId);
+
+
+            error.textContent = '';
+
+            error.classList.remove('active');
+        }
+
+
+        /* =====================================================
+           CLEAR FIELD STATE
+        ===================================================== */
+
+        function clearFieldState(
+            input,
+            errorId
+        ) {
+
+            input.classList.remove(
+                'valid',
+                'invalid'
+            );
+
+
+            const error =
+                document.getElementById(errorId);
+
+
+            error.textContent = '';
+
+            error.classList.remove(
+                'active'
+            );
+        }
+
+
+        /* =====================================================
+           LIVE VALIDATION
+        ===================================================== */
+
+        usernameInput.addEventListener(
+            'blur',
+            validateUsername
+        );
+
+
+        emailInput.addEventListener(
+            'blur',
+            validateEmail
+        );
+
+
+        passwordInput.addEventListener(
+            'blur',
+            validatePassword
+        );
+
+
+        usernameInput.addEventListener(
+            'input',
+            function () {
+
+                if (
+                    usernameInput.classList.contains(
+                        'invalid'
+                    )
+                ) {
+                    validateUsername();
+                }
+
+            }
+        );
+
+
+        emailInput.addEventListener(
+            'input',
+            function () {
+
+                if (
+                    emailInput.classList.contains(
+                        'invalid'
+                    )
+                ) {
+                    validateEmail();
+                }
+
+            }
+        );
+
+
+        passwordInput.addEventListener(
+            'input',
+            function () {
+
+                if (
+                    passwordInput.classList.contains(
+                        'invalid'
+                    )
+                ) {
+                    validatePassword();
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           PASSWORD VISIBILITY
+        ===================================================== */
+
+        function togglePassword() {
+
+            const toggle =
+                document.getElementById(
+                    'passwordToggle'
+                );
+
+
+            if (
+                passwordInput.type ===
+                'password'
+            ) {
+
+                passwordInput.type =
+                    'text';
+
+                toggle.textContent =
+                    '🙈';
+
+                toggle.setAttribute(
+                    'aria-label',
+                    'مخفی کردن رمز عبور'
+                );
+
+            } else {
+
+                passwordInput.type =
+                    'password';
+
+                toggle.textContent =
+                    '👁';
+
+                toggle.setAttribute(
+                    'aria-label',
+                    'نمایش رمز عبور'
+                );
+            }
+        }
+
+
+        /* =====================================================
+           REGISTER
+        ===================================================== */
+
+        async function register() {
+
+            hideMessages();
+
+
+            const usernameValid =
+                validateUsername();
+
+
+            const emailValid =
+                validateEmail();
+
+
+            const passwordValid =
+                validatePassword();
+
+
+            if (
+                !usernameValid ||
+                !emailValid ||
+                !passwordValid
+            ) {
+
+                showError(
+                    'لطفاً اطلاعات وارد شده را اصلاح کنید'
+                );
+
+                return;
+            }
+
+
+            const username =
+                usernameInput.value.trim();
+
+
+            const email =
+                emailInput.value.trim();
+
+
+            const password =
+                passwordInput.value;
+
+
+            registerBtn.disabled = true;
+
+            registerBtn.textContent =
+                'در حال ایجاد حساب...';
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/auth/register`,
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body: JSON.stringify({
+                                username,
+                                email,
+                                password
+                            })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    let message =
+                        'خطا در ثبت‌نام';
+
+
+                    try {
+
+                        const err =
+                            await response.json();
+
+
+                        if (
+                            typeof err.detail ===
+                            'string'
+                        ) {
+
+                            message =
+                                err.detail;
+
+                        } else if (
+                            Array.isArray(
+                                err.detail
+                            )
+                        ) {
+
+                            message =
+                                err.detail
+                                    .map(
+                                        item =>
+                                            item.msg
+                                    )
+                                    .join('، ');
+                        }
+
+                    } catch (_) {
+
+                        // اگر پاسخ JSON نبود
+                    }
+
+
+                    throw new Error(
+                        message
+                    );
+                }
+
+
+                showSuccess(
+                    'ثبت‌نام موفق بود! در حال انتقال به صفحه ورود...'
+                );
+
+
+                /*
+                 * بعد از موفقیت فرم را قفل می‌کنیم
+                 * تا کاربر دوباره درخواست نفرستد.
+                 */
+
+                usernameInput.disabled = true;
+
+                emailInput.disabled = true;
+
+                passwordInput.disabled = true;
+
+
+                registerBtn.disabled = true;
+
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            'login.html';
+
+                    },
+                    2000
+                );
+
+
+            } catch (err) {
+
+                showError(
+                    err.message ||
+                    'خطایی هنگام ثبت‌نام رخ داد'
+                );
+
+
+                registerBtn.disabled = false;
+
+                registerBtn.textContent =
+                    'ایجاد حساب کاربری';
+            }
+        }
+
+
+        /* =====================================================
+           GLOBAL ERROR
+        ===================================================== */
+
+        function showError(msg) {
+
+            const error =
+                document.getElementById(
+                    'error'
+                );
+
+
+            error.textContent =
+                '❌ ' + msg;
+
+
+            error.classList.add(
+                'active'
+            );
+        }
+
+
+        /* =====================================================
+           SUCCESS
+        ===================================================== */
+
         function showSuccess(msg) {
-            const success = document.getElementById('success');
-            success.textContent = msg;
-            success.classList.add('active');
+
+            const success =
+                document.getElementById(
+                    'success'
+                );
+
+
+            success.textContent =
+                '✓ ' + msg;
+
+
+            success.classList.add(
+                'active'
+            );
         }
-        
+
+
+        /* =====================================================
+           HIDE MESSAGES
+        ===================================================== */
+
         function hideMessages() {
-            document.getElementById('error').classList.remove('active');
-            document.getElementById('success').classList.remove('active');
+
+            document
+                .getElementById('error')
+                .classList.remove(
+                    'active'
+                );
+
+
+            document
+                .getElementById('success')
+                .classList.remove(
+                    'active'
+                );
         }
+
+
+        /* =====================================================
+           ENTER KEY
+        ===================================================== */
+
+        document.addEventListener(
+            'keydown',
+            function (e) {
+
+                if (
+                    e.key === 'Enter' &&
+                    !registerBtn.disabled
+                ) {
+
+                    register();
+                }
+
+            }
+        );
+
     </script>
+
 </body>
+
 </html>

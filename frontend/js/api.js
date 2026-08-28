@@ -1,4 +1,6 @@
-const API_BASE_URL = 'https://diagram-api-nrt3.onrender.com/api/v1';
+const API_BASE_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:54321/api/v1'
+    : 'https://diagram-api-nrt3.onrender.com/api/v1';
 
 async function generateDiagram(mode, text, diagramType) {
     const token = localStorage.getItem('token');

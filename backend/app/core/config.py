@@ -1,15 +1,15 @@
+
 import os
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings  # دقت کنید که از pydantic_settings باشد
 
-load_dotenv()
-
-class Settings:
-    APP_NAME: str = "IdeaDiagram AI"
-    VERSION: str = "2.0.0"
+class Settings(BaseSettings):
+    # تعریف متغیرها
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
     COLAB_API_URL: str = os.getenv("COLAB_API_URL", "")
-    
-    FREE_DAILY_LIMIT: int = 10
-    PREMIUM_DAILY_LIMIT: int = 50
 
+    class Config:
+        env_file = ".env"  # این خط باعث می‌شود متغیرها از فایل .env خوانده شوند
+
+# این خط حیاتی است! باید یک نمونه از کلاس بسازید
 settings = Settings()

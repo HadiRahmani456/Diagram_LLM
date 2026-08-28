@@ -3,122 +3,1128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdeaDiagram AI - تبدیل ایده به دیاگرام</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+    <title>IdeaDiagram AI | تبدیل ایده به دیاگرام</title>
+    <meta
+        name="description"
+        content="IdeaDiagram AI ایده‌ها و فرآیندهای شما را با هوش مصنوعی به دیاگرام تبدیل می‌کند."
+    >
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Gantt -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css"
+    >
+
+    <!-- Roadmap -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/styles/vis-timeline.min.css"
+    >
 </head>
+
 <body>
-    <div class="container">
-        <!-- هدر -->
-        <header class="header">
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <p style="font-size: 25px;">🚀</p>
-                <h1> IdeaDiagram AI</h1>
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="app-background">
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+    <div class="background-grid"></div>
+</div>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div class="app-shell">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand-area">
+
+            <div class="brand-logo">
+                <span>✦</span>
             </div>
-            
-            <p>ایده‌هات رو به دیاگرام تبدیل کن | فارسی </p>
-        </header>
 
-        <!-- گرید اصلی -->
-        <main class="main-grid">
-            <!-- پنل ورودی -->
-            <section class="card input-panel">
-                <h2>📝 ایده خود را وارد کنید</h2>
-                
-                <div class="mode-selector">
-                    <button class="mode-btn active" data-mode="online">☁️ آنلاین (AI)</button>
-                    <button class="mode-btn" data-mode="offline">💻 آفلاین (محلی)</button>
+            <div class="brand-text">
+                <div class="brand-name">
+                    IdeaDiagram
+                    <span>AI</span>
                 </div>
 
-                <div class="input-group">
-                    <label for="textInput">متن ایده، پروژه یا فرآیند:</label>
-                    <textarea 
-                        id="textInput" 
-                        placeholder="مثال: می‌خواهم یک فروشگاه اینترنتی راه‌اندازی کنم. ابتدا تحقیق بازار، سپس طراحی سایت، بعد بازاریابی و فروش..."
-                        rows="4"
-                    ></textarea>
+                <div class="brand-subtitle">
+                    تبدیل ایده به ساختار قابل مشاهده
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+            <div class="connection-status">
+                <span class="status-dot"></span>
+                <span>سیستم آماده است</span>
+            </div>
+
+            <div class="user-menu">
+
+                <div class="user-avatar" id="userAvatar">
+                    کاربر
                 </div>
 
-                <div class="input-group">
-                    <label for="diagramType">نوع دیاگرام:</label>
-                    <select id="diagramType">
-                        <option value="">خودکار</option>
-                        <option value="flowchart">📊 فلوچارت</option>
-                        <option value="roadmap">🗺️ نقشه راه</option>
-                        <option value="gantt_chart">📅 نمودار گانت</option>
-                    </select>
+                <div class="user-info">
+                    <span class="user-greeting">خوش آمدید</span>
+                    <strong id="usernameDisplay">کاربر</strong>
                 </div>
 
-                <button class="generate-btn" id="generateBtn">
-                    ✨ تولید دیاگرام
+                <button
+                    type="button"
+                    class="logout-btn"
+                    id="logoutBtn"
+                    title="خروج از حساب"
+                >
+                    خروج
+                    <span>↪</span>
                 </button>
 
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>در حال تحلیل و ساخت دیاگرام...</p>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="workspace">
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero-section">
+
+            <div class="hero-badge">
+                <span class="hero-badge-icon">✦</span>
+                هوش مصنوعی برای تفکر بصری
+            </div>
+
+            <h1>
+                ایده‌ات را
+                <span class="gradient-text">به دیاگرام</span>
+                تبدیل کن
+            </h1>
+
+            <p>
+                ایده، فرآیند یا پروژه‌ات را به زبان طبیعی توضیح بده؛
+                IdeaDiagram ساختار منطقی آن را تحلیل کرده و به یک دیاگرام
+                قابل فهم تبدیل می‌کند.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             WORKSPACE GRID
+        ================================================== -->
+
+        <section class="workspace-grid">
+
+
+            <!-- =============================================
+                 INPUT PANEL
+            ============================================== -->
+
+            <section class="panel input-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <div class="panel-kicker">
+                            مرحله ۱
+                        </div>
+
+                        <h2>
+                            ایده یا فرآیندت را توضیح بده
+                        </h2>
+                    </div>
+
+                    <div class="panel-icon">
+                        ✎
+                    </div>
+
                 </div>
 
-                <div class="error" id="error"></div>
 
-                <div class="info-row" id="infoRow" style="display: none;">
-                    <span class="badge" id="modeBadge"></span>
-                    <span class="badge remaining" id="remainingBadge"></span>
+                <!-- Text Input -->
+
+                <div class="input-section">
+
+                    <div class="input-label-row">
+
+                        <label for="textInput">
+                            متن ورودی
+                        </label>
+
+                        <span class="input-hint">
+                            فارسی یا انگلیسی
+                        </span>
+
+                    </div>
+
+                    <div class="textarea-wrapper">
+
+                        <textarea
+                            id="textInput"
+                            rows="8"
+                            maxlength="5000"
+                            placeholder="مثلاً:
+
+می‌خواهم یک فروشگاه اینترنتی راه‌اندازی کنم.
+ابتدا بازار را بررسی می‌کنیم، سپس محصولات را انتخاب می‌کنیم،
+بعد سایت را طراحی و پیاده‌سازی می‌کنیم.
+در مرحله بعد بازاریابی انجام می‌شود و در نهایت فروش آغاز خواهد شد."
+                        ></textarea>
+
+                        <div class="textarea-footer">
+
+                            <span>
+                                هرچه توضیح دقیق‌تر باشد، ساختار بهتری تولید می‌شود.
+                            </span>
+
+                            <span id="charCounter">
+                                ۰ / ۵۰۰۰
+                            </span>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+
+                <!-- Diagram Type -->
+
+                <div class="input-section">
+
+                    <div class="input-label-row">
+
+                        <label>
+                            نوع دیاگرام
+                        </label>
+
+                        <span class="input-hint">
+                            ساختار مناسب را انتخاب کن
+                        </span>
+
+                    </div>
+
+
+                    <div class="diagram-types">
+
+                        <button
+                            type="button"
+                            class="diagram-type-card active"
+                            data-diagram-type=""
+                        >
+
+                            <span class="diagram-type-icon">
+                                ✦
+                            </span>
+
+                            <span class="diagram-type-content">
+
+                                <strong>
+                                    خودکار
+                                </strong>
+
+                                <small>
+                                    انتخاب هوشمند نوع نمودار
+                                </small>
+
+                            </span>
+
+                            <span class="selection-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="diagram-type-card"
+                            data-diagram-type="flowchart"
+                        >
+
+                            <span class="diagram-type-icon">
+                                ◈
+                            </span>
+
+                            <span class="diagram-type-content">
+
+                                <strong>
+                                    Flowchart
+                                </strong>
+
+                                <small>
+                                    نمایش مراحل و ارتباطات
+                                </small>
+
+                            </span>
+
+                            <span class="selection-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="diagram-type-card"
+                            data-diagram-type="roadmap"
+                        >
+
+                            <span class="diagram-type-icon">
+                                ◫
+                            </span>
+
+                            <span class="diagram-type-content">
+
+                                <strong>
+                                    Roadmap
+                                </strong>
+
+                                <small>
+                                    نمایش مسیر و مراحل پروژه
+                                </small>
+
+                            </span>
+
+                            <span class="selection-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="diagram-type-card"
+                            data-diagram-type="gantt_chart"
+                        >
+
+                            <span class="diagram-type-icon">
+                                ▤
+                            </span>
+
+                            <span class="diagram-type-content">
+
+                                <strong>
+                                    Gantt Chart
+                                </strong>
+
+                                <small>
+                                    نمایش زمان‌بندی فعالیت‌ها
+                                </small>
+
+                            </span>
+
+                            <span class="selection-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Hidden select
+                         app.js / existing logic can still use it -->
+
+                    <select
+                        id="diagramType"
+                        class="hidden-select"
+                        aria-hidden="true"
+                    >
+
+                        <option value="">
+                            خودکار
+                        </option>
+
+                        <option value="flowchart">
+                            فلوچارت
+                        </option>
+
+                        <option value="roadmap">
+                            نقشه راه
+                        </option>
+
+                        <option value="gantt_chart">
+                            نمودار گانت
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- AI Engine -->
+
+                <div class="input-section">
+
+                    <div class="input-label-row">
+
+                        <label>
+                            موتور پردازش
+                        </label>
+
+                        <span class="input-hint">
+                            روش تولید دیاگرام
+                        </span>
+
+                    </div>
+
+
+                    <div class="engine-list">
+
+                        <!-- Groq -->
+
+                        <button
+                            type="button"
+                            class="engine-card active"
+                            data-mode="online"
+                        >
+
+                            <div class="engine-icon groq-icon">
+                                ⚡
+                            </div>
+
+                            <div class="engine-content">
+
+                                <div class="engine-title-row">
+
+                                    <strong>
+                                        Groq AI
+                                    </strong>
+
+                                    <span class="engine-tag recommended">
+                                        پیشنهادی
+                                    </span>
+
+                                </div>
+
+                                <small>
+                                    سریع و هوشمند
+                                </small>
+
+                            </div>
+
+                            <div class="engine-radio">
+                                <span></span>
+                            </div>
+
+                        </button>
+
+
+                        <!-- Colab -->
+
+                        <button
+                            type="button"
+                            class="engine-card"
+                            data-mode="colab"
+                        >
+
+                            <div class="engine-icon colab-icon">
+                                ☁
+                            </div>
+
+                            <div class="engine-content">
+
+                                <div class="engine-title-row">
+
+                                    <strong>
+                                        Colab AI
+                                    </strong>
+
+                                    <span class="engine-tag cloud">
+                                        Cloud
+                                    </span>
+
+                                </div>
+
+                                <small>
+                                    مدل مستقر در Google Colab
+                                </small>
+
+                            </div>
+
+                            <div class="engine-radio">
+                                <span></span>
+                            </div>
+
+                        </button>
+
+
+                        <!-- Local -->
+
+                        <button
+                            type="button"
+                            class="engine-card"
+                            data-mode="local"
+                        >
+
+                            <div class="engine-icon local-icon">
+                                ◉
+                            </div>
+
+                            <div class="engine-content">
+
+                                <div class="engine-title-row">
+
+                                    <strong>
+                                        Local AI
+                                    </strong>
+
+                                    <span class="engine-tag">
+                                        Local
+                                    </span>
+
+                                </div>
+
+                                <small>
+                                    پردازش محلی بدون API خارجی
+                                </small>
+
+                            </div>
+
+                            <div class="engine-radio">
+                                <span></span>
+                            </div>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="engine-notice">
+
+                        <span class="notice-icon">
+                            ⓘ
+                        </span>
+
+                        <span id="engineDescription">
+                            Groq برای تولید سریع دیاگرام انتخاب شده است.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Generate -->
+
+                <div class="generate-area">
+
+                    <button
+                        type="button"
+                        class="generate-btn"
+                        id="generateBtn"
+                    >
+
+                        <span class="generate-icon">
+                            ✦
+                        </span>
+
+                        <span>
+                            تولید دیاگرام
+                        </span>
+
+                        <span class="generate-arrow">
+                            ←
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- Loading -->
+
+                <div
+                    class="loading"
+                    id="loading"
+                    style="display: none;"
+                >
+
+                    <div class="loading-animation">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    <div class="loading-content">
+
+                        <strong>
+                            در حال ساخت دیاگرام...
+                        </strong>
+
+                        <span>
+                            متن شما در حال تحلیل و تبدیل به ساختار بصری است.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Error -->
+
+                <div
+                    class="error"
+                    id="error"
+                    role="alert"
+                    style="display: none;"
+                ></div>
+
+
+                <!-- Info -->
+
+                <div
+                    class="info-row"
+                    id="infoRow"
+                    style="display: none;"
+                >
+
+                    <span
+                        class="badge"
+                        id="modeBadge"
+                    ></span>
+
+                    <span
+                        class="badge remaining"
+                        id="remainingBadge"
+                    ></span>
+
+                </div>
+
             </section>
 
-            <!-- پنل خروجی -->
-            <section class="card output-panel">
-                <h2>🎨 دیاگرام خروجی</h2>
-                <div class="diagram-container" id="diagramContainer">
-                    <p class="placeholder-text">دیاگرام شما اینجا نمایش داده می‌شود...</p>
-                </div>
-                <div class="actions" id="actions" style="display: none;">
-                    <button class="action-btn" id="downloadSvgBtn">📥 دانلود SVG</button>
-                    <button class="action-btn" id="downloadPngBtn">🖼️ دانلود PNG</button>
-                    <button class="action-btn" id="fullscreenBtn">📺 تمام صفحه</button>
-                    <button class="action-btn" id="copyCodeBtn">📋 کپی کد</button>
-                </div>
-            </section>
-        </main>
-    </div>
 
-    <!-- اسکریپت‌ها -->
-        <!-- اسکریپت‌ها -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvg@4.0.2/lib/umd.min.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/diagram.js"></script>
-    <script src="js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
-    <!-- Gantt -->
-    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
-    <!-- Roadmap -->
-    <script src="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.2/standalone/umd/vis-timeline-graph2d.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/styles/vis-timeline.min.css">
-    <script>
-    // چک لاگین
+            <!-- =============================================
+                 OUTPUT PANEL
+            ============================================== -->
+
+            <section class="panel output-panel">
+
+                <div class="panel-header output-header">
+
+                    <div>
+
+                        <div class="panel-kicker">
+                            مرحله ۲
+                        </div>
+
+                        <h2>
+                            نتیجه
+                        </h2>
+
+                    </div>
+
+                    <div class="output-status" id="outputStatus">
+
+                        <span class="status-dot"></span>
+
+                        آماده دریافت خروجی
+
+                    </div>
+
+                </div>
+
+
+                <!-- Diagram Toolbar -->
+
+                <div
+                    class="diagram-toolbar"
+                    id="diagramToolbar"
+                >
+
+                    <div class="toolbar-title">
+
+                        <span class="toolbar-icon">
+                            ◇
+                        </span>
+
+                        <span>
+                            Diagram Workspace
+                        </span>
+
+                    </div>
+
+                    <div class="toolbar-actions">
+
+                        <button
+                            type="button"
+                            class="toolbar-btn"
+                            id="fullscreenBtn"
+                            title="تمام صفحه"
+                        >
+                            ⛶
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Diagram Container -->
+
+                <div
+                    class="diagram-container"
+                    id="diagramContainer"
+                >
+
+                    <div class="empty-state">
+
+                        <div class="empty-visual">
+
+                            <div class="empty-node node-one">
+                                <span></span>
+                            </div>
+
+                            <div class="empty-line line-one"></div>
+
+                            <div class="empty-node node-two">
+                                <span></span>
+                            </div>
+
+                            <div class="empty-line line-two"></div>
+
+                            <div class="empty-node node-three">
+                                <span></span>
+                            </div>
+
+                        </div>
+
+                        <h3>
+                            دیاگرام اینجا ساخته می‌شود
+                        </h3>
+
+                        <p>
+                            متن خود را وارد کنید و روی
+                            <strong>«تولید دیاگرام»</strong>
+                            بزنید.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Output Actions -->
+
+                <div
+                    class="actions"
+                    id="actions"
+                    style="display: none;"
+                >
+
+                    <button
+                        type="button"
+                        class="action-btn primary-action"
+                        id="downloadSvgBtn"
+                    >
+                        <span>↓</span>
+                        دانلود SVG
+                    </button>
+
+                    <button
+                        type="button"
+                        class="action-btn"
+                        id="downloadPngBtn"
+                    >
+                        <span>▣</span>
+                        دانلود PNG
+                    </button>
+
+                    <button
+                        type="button"
+                        class="action-btn"
+                        id="copyCodeBtn"
+                    >
+                        <span>⧉</span>
+                        کپی کد Mermaid
+                    </button>
+
+                </div>
+
+
+                <!-- Output Meta -->
+
+                <div
+                    class="output-meta"
+                    id="outputMeta"
+                >
+
+                    <div class="meta-item">
+
+                        <span class="meta-icon">
+                            ◈
+                        </span>
+
+                        <span>
+                            فرمت خروجی
+                        </span>
+
+                        <strong>
+                            SVG / PNG
+                        </strong>
+
+                    </div>
+
+                    <div class="meta-divider"></div>
+
+                    <div class="meta-item">
+
+                        <span class="meta-icon">
+                            ⚡
+                        </span>
+
+                        <span>
+                            موتور
+                        </span>
+
+                        <strong id="outputEngine">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             FEATURES
+        ================================================== -->
+
+        <section class="features-section">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <div>
+                    <strong>
+                        تحلیل هوشمند
+                    </strong>
+
+                    <span>
+                        ساختار ایده شما به صورت خودکار استخراج می‌شود.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ◈
+                </div>
+
+                <div>
+                    <strong>
+                        چند نوع دیاگرام
+                    </strong>
+
+                    <span>
+                        Flowchart، Roadmap و Gantt Chart
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ↓
+                </div>
+
+                <div>
+                    <strong>
+                        خروجی قابل استفاده
+                    </strong>
+
+                    <span>
+                        خروجی SVG، PNG و کد Mermaid
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <span>
+            IdeaDiagram AI
+        </span>
+
+        <span class="footer-separator">
+            •
+        </span>
+
+        <span>
+            تبدیل ایده به ساختار بصری
+        </span>
+
+        <span class="footer-version">
+            v1.0
+        </span>
+
+    </footer>
+
+</div>
+
+
+<!-- =========================================================
+     SCRIPTS
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/canvg@4.0.2/lib/umd.min.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/diagram.js"></script>
+<script src="js/app.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+
+<!-- Gantt -->
+<script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
+
+<!-- Roadmap -->
+<script src="https://cdn.jsdelivr.net/npm/vis-timeline@7.7.2/standalone/umd/vis-timeline-graph2d.min.js"></script>
+
+
+<!-- =========================================================
+     PAGE LOGIC
+========================================================= -->
+
+<script>
+
+    /*
+     * ---------------------------------------------------------
+     * Authentication
+     * ---------------------------------------------------------
+     */
+
     const token = localStorage.getItem('token');
+
     if (!token) {
         window.location.href = 'login.html';
     }
-    
-    // نمایش نام کاربری
+
+
+    /*
+     * ---------------------------------------------------------
+     * User
+     * ---------------------------------------------------------
+     */
+
     const username = localStorage.getItem('username');
+
+    const usernameDisplay =
+        document.getElementById('usernameDisplay');
+
+    const userAvatar =
+        document.getElementById('userAvatar');
+
     if (username) {
-        document.querySelector('.header p').textContent = `خوش آمدید ${username}! | ایده‌هات رو به دیاگرام تبدیل کن`;
+
+        usernameDisplay.textContent = username;
+
+        const firstLetter =
+            username.trim().charAt(0).toUpperCase();
+
+        userAvatar.textContent =
+            firstLetter || 'ک';
+
     }
-    
-    // دکمه خروج
-    const logoutBtn = document.createElement('button');
-    logoutBtn.textContent = '🚪 خروج';
-    logoutBtn.style.cssText = 'position:fixed;top:20px;left:20px;padding:10px 20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:white;cursor:pointer;z-index:1000;';
-    logoutBtn.onclick = function() {
-        localStorage.clear();
+
+
+    /*
+     * ---------------------------------------------------------
+     * Logout
+     * ---------------------------------------------------------
+     */
+
+    const logoutBtn =
+        document.getElementById('logoutBtn');
+
+    logoutBtn.addEventListener('click', function () {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+
         window.location.href = 'login.html';
-    };
-    document.body.appendChild(logoutBtn);
+
+    });
+
+
+    /*
+     * ---------------------------------------------------------
+     * Character Counter
+     * ---------------------------------------------------------
+     */
+
+    const textInput =
+        document.getElementById('textInput');
+
+    const charCounter =
+        document.getElementById('charCounter');
+
+
+    function updateCharacterCounter() {
+
+        const length = textInput.value.length;
+
+        const formattedLength =
+            length.toLocaleString('fa-IR');
+
+        charCounter.textContent =
+            `${formattedLength} / ۵۰۰۰`;
+
+    }
+
+
+    textInput.addEventListener(
+        'input',
+        updateCharacterCounter
+    );
+
+
+    /*
+     * ---------------------------------------------------------
+     * Diagram Type Cards
+     * ---------------------------------------------------------
+     */
+
+    const diagramTypeCards =
+        document.querySelectorAll('.diagram-type-card');
+
+    const diagramTypeSelect =
+        document.getElementById('diagramType');
+
+
+    diagramTypeCards.forEach(card => {
+
+        card.addEventListener('click', function () {
+
+            diagramTypeCards.forEach(item => {
+
+                item.classList.remove('active');
+
+            });
+
+            this.classList.add('active');
+
+            const selectedType =
+                this.dataset.diagramType;
+
+            diagramTypeSelect.value =
+                selectedType;
+
+        });
+
+    });
+
+
+    /*
+     * ---------------------------------------------------------
+     * Output status helper
+     * ---------------------------------------------------------
+     */
+
+    window.setOutputStatus =
+        function (text, active = false) {
+
+            const outputStatus =
+                document.getElementById(
+                    'outputStatus'
+                );
+
+            if (!outputStatus) return;
+
+            outputStatus.innerHTML = `
+
+                <span
+                    class="status-dot ${active ? 'active' : ''}"
+                ></span>
+
+                ${text}
+
+            `;
+
+        };
+
+
+    /*
+     * ---------------------------------------------------------
+     * Initial status
+     * ---------------------------------------------------------
+     */
+
+    updateCharacterCounter();
+
+    window.setOutputStatus(
+        'آماده دریافت خروجی',
+        false
+    );
+
 </script>
+
 </body>
 </html>

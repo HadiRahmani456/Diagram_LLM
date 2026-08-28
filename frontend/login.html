@@ -1,152 +1,879 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود - IdeaDiagram AI</title>
+
+    <title>ورود | IdeaDiagram AI</title>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
         body {
-            font-family: 'Segoe UI', Tahoma;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(124, 58, 237, 0.22),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(6, 182, 212, 0.18),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #080b18 0%,
+                    #11152b 45%,
+                    #0a1020 100%
+                );
+
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+
+            padding: 24px;
+
+            overflow: hidden;
+
+            position: relative;
         }
+
+
+        /* =====================================================
+           BACKGROUND GRID
+        ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.8),
+                transparent
+            );
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           GLOW CIRCLES
+        ===================================================== */
+
+        .glow {
+            position: fixed;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            pointer-events: none;
+
+            opacity: 0.35;
+        }
+
+        .glow-one {
+            background: #7c3aed;
+
+            top: -100px;
+            right: -80px;
+        }
+
+        .glow-two {
+            background: #06b6d4;
+
+            bottom: -120px;
+            left: -100px;
+        }
+
+
+        /* =====================================================
+           LOGIN CARD
+        ===================================================== */
+
         .login-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 400px;
-            max-width: 90%;
+            width: 430px;
+            max-width: 100%;
+
+            padding: 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.085),
+                    rgba(255,255,255,0.035)
+                );
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            border-radius: 26px;
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+
+            position: relative;
+
+            z-index: 2;
+
+            animation: cardAppear 0.6s ease;
         }
-        h1 {
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+            width: 64px;
+            height: 64px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 12px 35px rgba(124,58,237,0.28);
+
+            position: relative;
+        }
+
+
+        .logo::after {
+            content: "";
+
+            position: absolute;
+            inset: -5px;
+
+            border-radius: 22px;
+
+            border: 1px solid rgba(124,58,237,0.25);
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .brand-title {
             text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);
-            background-clip: text;;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #c4b5fd,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
             -webkit-text-fill-color: transparent;
         }
-        p { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 14px; }
+
+
+        .subtitle {
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 14px;
+
+            margin-top: 8px;
+            margin-bottom: 32px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+
+        .input-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #d1d5db;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        .input-wrapper {
+            position: relative;
+        }
+
+
+        .input-icon {
+            position: absolute;
+
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #7c8497;
+
+            font-size: 17px;
+
+            pointer-events: none;
+        }
+
+
         input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            color: white;
+
+            height: 52px;
+
+            padding:
+                0 45px
+                0 14px;
+
+            border-radius: 13px;
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            background: rgba(0,0,0,0.22);
+
+            color: #ffffff;
+
+            font-family: inherit;
+
             font-size: 14px;
-            transition: all 0.3s;
+
+            outline: none;
+
+            transition:
+                border-color 0.25s,
+                box-shadow 0.25s,
+                background 0.25s;
         }
-        input:focus { outline: none; border-color: #f09433; }
+
+
+        input::placeholder {
+            color: #6b7280;
+        }
+
+
+        input:focus {
+            border-color: rgba(124,58,237,0.75);
+
+            background: rgba(0,0,0,0.30);
+
+            box-shadow:
+                0 0 0 3px rgba(124,58,237,0.12),
+                0 8px 25px rgba(0,0,0,0.15);
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
         button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #f09433, #e6683c);
+
+            height: 52px;
+
+            margin-top: 6px;
+
             border: none;
-            border-radius: 10px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #6366f1 55%,
+                    #06b6d4
+                );
+
             color: white;
-            font-size: 16px;
-            font-weight: bold;
+
+            font-family: inherit;
+
+            font-size: 15px;
+            font-weight: 700;
+
             cursor: pointer;
-            transition: all 0.3s;
+
+            box-shadow:
+                0 12px 30px rgba(99,102,241,0.22);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                opacity 0.2s;
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(240, 148, 51, 0.3); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .link { text-align: center; margin-top: 20px; }
-        .link a { color: #f09433; text-decoration: none; }
-        .error { color: #ff4444; text-align: center; margin-top: 10px; display: none; }
-        .error.active { display: block; }
-        .loading { display: none; text-align: center; margin-top: 10px; color: #f09433; }
-        .loading.active { display: block; }
+
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 38px rgba(99,102,241,0.32);
+        }
+
+
+        button:active {
+            transform: translateY(0);
+        }
+
+
+        button:disabled {
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading {
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            margin-top: 16px;
+
+            color: #a5b4fc;
+
+            font-size: 13px;
+        }
+
+
+        .loading.active {
+            display: flex;
+        }
+
+
+        .spinner {
+            width: 17px;
+            height: 17px;
+
+            border: 2px solid rgba(255,255,255,0.18);
+
+            border-top-color: #a5b4fc;
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px 14px;
+
+            border-radius: 11px;
+
+            background: rgba(239,68,68,0.08);
+
+            border: 1px solid rgba(239,68,68,0.22);
+
+            color: #fca5a5;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .error.active {
+            display: block;
+
+            animation: messageAppear 0.25s ease;
+        }
+
+
+        @keyframes messageAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           REGISTER LINK
+        ===================================================== */
+
+        .link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            color: #8b93a5;
+
+            font-size: 13px;
+        }
+
+
+        .link a {
+            color: #a78bfa;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition: color 0.2s;
+        }
+
+
+        .link a:hover {
+            color: #67e8f9;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer-text {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #555d70;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 16px;
+            }
+
+            .login-box {
+                padding: 30px 22px;
+
+                border-radius: 22px;
+            }
+
+            .brand-title {
+                font-size: 24px;
+            }
+
+            .logo {
+                width: 58px;
+                height: 58px;
+
+                font-size: 24px;
+            }
+        }
+
     </style>
 </head>
+
+
 <body>
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+
     <div class="login-box">
-        <h1>🚀 IdeaDiagram AI</h1>
-        <p>وارد حساب کاربری خود شوید</p>
-        
-        <input type="text" id="username" placeholder="نام کاربری">
-        <input type="password" id="password" placeholder="رمز عبور">
-        <button id="loginBtn" onclick="login()">✨ ورود</button>
-        
-        <div class="loading" id="loading">⏳ در حال ورود...</div>
-        <div class="error" id="error"></div>
-        
-        <div class="link">
-            حساب ندارید؟ <a href="register.html">ثبت‌نام کنید</a>
+
+        <div class="logo">
+            ✦
         </div>
+
+        <h1 class="brand-title">
+            IdeaDiagram AI
+        </h1>
+
+        <p class="subtitle">
+            برای ادامه وارد حساب کاربری خود شوید
+        </p>
+
+
+        <div class="input-group">
+
+            <label for="username">
+                نام کاربری
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    ◉
+                </span>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="نام کاربری خود را وارد کنید"
+                    autocomplete="username"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="password">
+                رمز عبور
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    ◈
+                </span>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="رمز عبور خود را وارد کنید"
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button id="loginBtn" onclick="login()">
+            ورود به حساب
+        </button>
+
+
+        <div class="loading" id="loading">
+
+            <span class="spinner"></span>
+
+            <span>
+                در حال ورود...
+            </span>
+
+        </div>
+
+
+        <div class="error" id="error"></div>
+
+
+        <div class="link">
+
+            حساب کاربری ندارید؟
+
+            <a href="register.html">
+                ثبت‌نام کنید
+            </a>
+
+        </div>
+
+
+        <div class="footer-text">
+            IdeaDiagram AI · ساخت دیاگرام با هوش مصنوعی
+        </div>
+
     </div>
 
+
     <script>
-        const API_BASE_URL = 'https://diagram-api-nrt3.onrender.com/api/v1';
-        const API_URL = 'https://diagram-api-nrt3.onrender.com/api/v1';
+
+        /* =====================================================
+           API
+        ===================================================== */
+
+        const API_URL =
+            window.location.hostname === 'localhost'
+                ? 'http://localhost:54321/api/v1'
+                : 'https://diagram-api-nrt3.onrender.com/api/v1';
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
 
         async function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            
+
+            const username =
+                document
+                    .getElementById('username')
+                    .value
+                    .trim();
+
+            const password =
+                document
+                    .getElementById('password')
+                    .value
+                    .trim();
+
+
             if (!username || !password) {
-                showError('لطفاً همه فیلدها را پر کنید');
+
+                showError(
+                    'لطفاً نام کاربری و رمز عبور را وارد کنید'
+                );
+
                 return;
             }
-            
-            const btn = document.getElementById('loginBtn');
-            const loading = document.getElementById('loading');
-            
+
+
+            const btn =
+                document.getElementById('loginBtn');
+
+            const loading =
+                document.getElementById('loading');
+
+
             btn.disabled = true;
+
             loading.classList.add('active');
+
             hideError();
-            
+
+
             try {
-                const formData = new URLSearchParams();
-                formData.append('username', username);
-                formData.append('password', password);
-                
-                const response = await fetch(`${API_BASE_URL}/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData
-                });
-                
+
+                const formData =
+                    new URLSearchParams();
+
+                formData.append(
+                    'username',
+                    username
+                );
+
+                formData.append(
+                    'password',
+                    password
+                );
+
+
+                const response =
+                    await fetch(
+                        `${API_URL}/auth/login`,
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/x-www-form-urlencoded'
+                            },
+
+                            body: formData
+                        }
+                    );
+
+
                 if (!response.ok) {
-                    const err = await response.json();
-                    throw new Error(err.detail || 'خطا در ورود');
+
+                    const err =
+                        await response.json();
+
+                    throw new Error(
+                        err.detail ||
+                        'خطا در ورود'
+                    );
                 }
-                
-                const data = await response.json();
-                localStorage.setItem('token', data.access_token);
-                localStorage.setItem('username', username);
-                
-                window.location.href = 'index.html';
-                
+
+
+                const data =
+                    await response.json();
+
+
+                localStorage.setItem(
+                    'token',
+                    data.access_token
+                );
+
+                localStorage.setItem(
+                    'username',
+                    username
+                );
+
+
+                window.location.href =
+                    'index.html';
+
+
             } catch (err) {
-                showError(err.message);
+
+                showError(
+                    err.message
+                );
+
             } finally {
+
                 btn.disabled = false;
-                loading.classList.remove('active');
+
+                loading.classList.remove(
+                    'active'
+                );
             }
         }
-        
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
         function showError(msg) {
-            const error = document.getElementById('error');
-            error.textContent = '❌ ' + msg;
+
+            const error =
+                document.getElementById('error');
+
+            error.textContent =
+                '❌ ' + msg;
+
             error.classList.add('active');
         }
-        
+
+
         function hideError() {
-            document.getElementById('error').classList.remove('active');
+
+            document
+                .getElementById('error')
+                .classList.remove('active');
         }
-        
-        // Enter key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') login();
-        });
+
+
+        /* =====================================================
+           ENTER KEY
+        ===================================================== */
+
+        document.addEventListener(
+            'keydown',
+            function (e) {
+
+                if (e.key === 'Enter') {
+                    login();
+                }
+
+            }
+        );
+
     </script>
+
 </body>
+
 </html>

@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.core.database import init_db
 from app.api.v1.endpoints import diagram, auth
+import os
 
 app = FastAPI(title="IdeaDiagram AI", version="2.0.0")
 
@@ -20,6 +23,24 @@ app.include_router(diagram.router, prefix="/api/v1/diagram", tags=["diagram"])
 def startup():
     init_db()
 
+# مسیر فرانت
+FRONTEND_DIR = "E:\\Diagram_LLm\\frontend"
+
 @app.get("/")
 async def root():
-    return {"message": "IdeaDiagram AI API", "status": "online"}
+    return FileResponse(os.path.join(FRONTEND_DIR, "login.html"))
+
+@app.get("/login.html")
+async def login():
+    return FileResponse(os.path.join(FRONTEND_DIR, "login.html"))
+
+@app.get("/index.html")
+async def index():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
+@app.get("/register.html")
+async def register():
+    return FileResponse(os.path.join(FRONTEND_DIR, "register.html"))
+
+app.mount("/css", StaticFiles(directory=os.path.join(FRONTEND_DIR, "css")), name="css")
+app.mount("/js", StaticFiles(directory=os.path.join(FRONTEND_DIR, "js")), name="js")
