@@ -124,7 +124,7 @@ async function renderDiagram(mermaidCode) {
             svg.style.width = 'auto';
             svg.style.height = 'auto';
 
-            svg.style.maxWidth = 'none';
+            svg.style.maxWidth = '100%';
 
             svg.style.display = 'block';
 
