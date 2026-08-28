@@ -44,3 +44,10 @@ async def register():
 
 app.mount("/css", StaticFiles(directory=os.path.join(FRONTEND_DIR, "css")), name="css")
 app.mount("/js", StaticFiles(directory=os.path.join(FRONTEND_DIR, "js")), name="js")
+
+
+
+
+
+# cd E:\Diagram_LLm\backend
+# uvicorn app.main:app --reload --port 54321
