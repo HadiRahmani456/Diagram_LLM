@@ -41,11 +41,19 @@ async function handleGenerate() {
     try {
         const data = await generateDiagram(currentMode, text, diagramType);
 
-        if (!data.mermaid_code) {
-            throw new Error('کد دیاگرام از سرور دریافت نشد.');
-        }
+        if (data.diagram_type === 'roadmap') {
+    await renderRoadmap(data.nodes);
+}
+else if (data.diagram_type === 'gantt_chart') {
+    renderGanttChart(data.nodes);
+}
+else {
+    if (!data.mermaid_code) {
+        throw new Error('کد دیاگرام از سرور دریافت نشد.');
+    }
 
-        await renderDiagram(data.mermaid_code);
+    await renderDiagram(data.mermaid_code);
+}
         showInfo(data.engine || data.mode, data.remaining_requests);
         updateEngineMeta(data.engine || data.mode);
         setOutputStatus('دیاگرام با موفقیت ساخته شد', true);

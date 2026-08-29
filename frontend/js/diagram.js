@@ -113,23 +113,27 @@ async function renderDiagram(mermaidCode) {
             </div>
         `;
 
-        const svg =
-            container.querySelector('svg');
-
-        if (svg) {
-
-            svg.removeAttribute('width');
-            svg.removeAttribute('height');
-
-            svg.style.width = 'auto';
-            svg.style.height = 'auto';
-
-            svg.style.maxWidth = '100%';
-
-            svg.style.display = 'block';
-
-            svg.style.margin = '0 auto';
-        }
+        const svg = container.querySelector('svg');
+if (svg) {
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+    
+    // ✅ تنظیم عرض و ارتفاع مناسب
+    svg.style.width = '100%';
+    svg.style.height = 'auto';
+    svg.style.maxWidth = '100%';
+    svg.style.maxHeight = '600px';  // ✅ محدود کردن ارتفاع
+    
+    // ✅ یا از viewBox استفاده کن
+    const viewBox = svg.getAttribute('viewBox');
+    if (viewBox) {
+        const [, , w, h] = viewBox.split(' ').map(Number);
+        svg.style.aspectRatio = `${w} / ${h}`;
+    }
+    
+    svg.style.display = 'block';
+    svg.style.margin = '0 auto';
+}
 
         diagramScale = 1;
 
@@ -744,70 +748,98 @@ function renderGanttChart(nodes) {
 async function renderRoadmap(nodes) {
 
     const container =
-        document.getElementById(
-            'diagramContainer'
-        );
+        document.getElementById('diagramContainer');
 
-    if (!container) return;
+    if (!container || !nodes?.length) return;
+
+    currentMermaidCode = '';
 
     container.innerHTML = `
-        <div class="diagram-loading">
-            <div class="diagram-spinner"></div>
-            <span>
-                در حال ساخت Roadmap...
-            </span>
+        <div class="roadmap-wrapper">
+
+            <div class="roadmap-header">
+
+                <div class="roadmap-heading">
+
+                    <span class="roadmap-kicker">
+                        PROJECT ROADMAP
+                    </span>
+
+                    <h3>
+                        نقشه راه پروژه
+                    </h3>
+
+                    <p>
+                        مسیر اجرای پروژه از شروع تا تکمیل
+                    </p>
+
+                </div>
+
+                <div class="roadmap-count">
+                    ${nodes.length} مرحله
+                </div>
+
+            </div>
+
+
+            <div class="roadmap-scroll">
+
+                <div class="roadmap-track">
+
+                    ${nodes.map((node, index) => `
+
+                        <div class="roadmap-item">
+
+                            <div class="roadmap-step">
+                                <span>
+                                    ${String(index + 1).padStart(2, '0')}
+                                </span>
+                            </div>
+
+                            <div class="roadmap-connector"></div>
+
+                            <div class="roadmap-card">
+
+                                <div class="roadmap-card-top">
+
+                                    <span>
+                                        مرحله ${index + 1}
+                                    </span>
+
+                                    <div class="roadmap-status">
+                                        ${index === 0
+                                            ? 'شروع'
+                                            : index === nodes.length - 1
+                                                ? 'پایان'
+                                                : 'در مسیر'}
+                                    </div>
+
+                                </div>
+
+                                <h4>
+                                    ${node.label || `مرحله ${index + 1}`}
+                                </h4>
+
+                                <p>
+                                    گام ${index + 1}
+                                    از ${nodes.length}
+                                    در مسیر اجرای پروژه
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    `).join('')}
+
+                </div>
+
+            </div>
+
         </div>
     `;
 
-    let code =
-        'timeline\n';
-
-    code +=
-        '    title نقشه راه\n';
-
-    nodes.forEach(
-        (node, index) => {
-
-            code +=
-                `    ${index + 1} : ${node.label}\n`;
-        }
-    );
-
-    try {
-
-        const renderId =
-            'roadmap-' +
-            Date.now();
-
-        const { svg } =
-            await mermaid.render(
-                renderId,
-                code
-            );
-
-        container.innerHTML =
-            `<div class="diagram-canvas">
-                ${svg}
-            </div>`;
-
-        currentMermaidCode =
-            code;
-
-        document.getElementById(
-            'actions'
-        ).style.display =
-            'grid';
-
-    } catch (error) {
-
-        console.error(error);
-
-        container.innerHTML = `
-            <div class="diagram-error">
-                ⚠️ خطا در ساخت Roadmap
-            </div>
-        `;
-    }
+    document.getElementById('actions').style.display = 'grid';
 }
 
 
